@@ -25,10 +25,18 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
-// Gets polyratings for professors
-function getRatings() {
-  return 0;
-}
+// Gets list of all professors
+// Key: lastname, value: [rating, id]
+var profDict = {};
+const response = fetch("https://api-prod.polyratings.org/professors.all")
+                            .then(response => response.json())
+                            .then(data => 
+                              { const profList = data["result"]["data"];
+                                for (let i=0; i<profList.length; i++) {
+                                  profDict[profList[i]["lastName"]] = [profList[i]["overallRating"], profList[i]["id"]]
+                            }});
+                        
+          
 
 // Creates div blocks for each professor
 function createDivs() {
