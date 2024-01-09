@@ -1,23 +1,15 @@
 {
-    "name": "polyExtention",
-    "version": "1.0",
-    "manifest_version": 2,
-    "permissions": [
-      "activeTab",
-      "storage"
-    ],
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-      }
-    ],
-    "browser_action": {
-      "default_icon": "icon.png",
-      "default_popup": "popup.html"
-    },
-    "background": {
-      "scripts": ["background.js"]
+  "name": "polyExtention",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
+  ],
+  "background": {
+    "service_worker": ["background.js"]
   }
-  
+}
