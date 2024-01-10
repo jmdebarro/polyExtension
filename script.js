@@ -37,9 +37,12 @@ function createDivs(profNameList, profDict) {
   return newDiv;
 }
 
+console.log("Runs at least");
 // Add check to see if on correct website
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log("Here");
     if (request.type === "html") {
+      console.log("Made it here");
       
       // Creates dummy div to store html
       var tempContent = document.createElement("div");
