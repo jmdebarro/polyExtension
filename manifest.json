@@ -7,6 +7,7 @@
   "icons" : {
     "16" : "icon16.png"
   },
+  "background" : {"service_worker" : "service-worker.js"},
   "content_scripts": [
     {
       "matches": ["https://cmsweb.pscs.calpoly.edu/psp/*"],
