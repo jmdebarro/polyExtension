@@ -1,31 +1,43 @@
 // Add check to see if on correct website
-function getHTML() {
-  chrome.runtime.onMessage.addListener(function (message) {
-    console.log("Inside service-worker")
-    if (message.type === "html") {
-      // Creates dummy div to store html
-      return message.content;
-    }
-  });
-}
+// function getHTML() {
+//   chrome.runtime.onMessage.addListener(function (message) {
+//     console.log("Inside service-worker")
+//     if (message.type === "html") {
+//       // Creates dummy div to store html
+//       return message.content;
+//     }
+//   });
+// }
 
-var page_html;
-// background.js
+// Add js button to send message here, which sends message to content, then sends content.js response back to popup.js
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.type === 'html') {
-        // Get information about the current tab
-        page_html = message.content;
-        }
-    return true;
-});
+  if (message.type === 'getHTMLInfo') {
+    var page_html;
+    // Get information about the current tab
+    console.log("Received test req and about to send content req");
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      console.log(tabs);
+      // tabs[0] represents the currently active tab in the current window
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'reqHTML' }, function(response) {
+        
+        handleResponse();
 
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.type === 'getHTMLInfo') {
-        // Get information about the current tab
-        if (typeof(page_html) != undefined) {
+        function handleResponse() {
+          console.log("Inside handle resposne function");
+          page_html = response;
+          if (page_html != undefined) {
             sendResponse(page_html);
+          }
         }
-        // Return true to indicate that sendResponse will be called asynchronously
-        return true;
-    }
+
+      });
+    });
+    // console.log("Page_html var: ", page_html);
+    // if (page_html !== undefined) {
+    //     sendResponse(page_html);
+    // }
+    console.log("Returning from service worker")
+    // Return true to indicate that sendResponse will be called asynchronously
+    return true;
+  }
 });
