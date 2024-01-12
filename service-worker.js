@@ -16,14 +16,13 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     // Get information about the current tab
     console.log("Received test req and about to send content req");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      console.log(tabs);
       // tabs[0] represents the currently active tab in the current window
       chrome.tabs.sendMessage(tabs[0].id, { type: 'reqHTML' }, function(response) {
         
         handleResponse();
 
         function handleResponse() {
-          console.log("Inside handle resposne function");
+          console.log("Inside handle response function");
           page_html = response;
           if (page_html != undefined) {
             sendResponse(page_html);

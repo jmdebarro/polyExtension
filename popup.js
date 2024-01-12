@@ -77,8 +77,9 @@ function testing() {
     chrome.runtime.sendMessage({ type: 'getHTMLInfo' }, function (response) {
       var parser = new DOMParser();
       var tempHTML = parser.parseFromString(response, "text/html");
-      // console.log(tempHTML);
-      console.log(tempHTML);
+      var mainBody = tempHTML.getElementById("main_iframe");
+      // var iframeDocument = mainBody.contentDocument || mainBody.contentWindow.document
+      console.log(mainBody);
     });
 }
 
